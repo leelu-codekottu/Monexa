@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monexa – Personal Finance Advisor</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <header class="navbar">
+        <div class="brand">
+            <div class="logo">M</div>
+            <span>Monexa</span>
+        </div>
+        <nav class="nav-links">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#market">Market</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#advisor">Advisor</a>
+            <a href="#automation">Automation</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Dashboard -->
+        <section id="dashboard" class="section">
+            <div class="section-header">
+                <h1>Personal Finance Dashboard</h1>
+                <p class="muted">Track spending, plan savings, and get insights at a glance.</p>
+            </div>
+
+            <div class="grid three">
+                <div class="card">
+                    <h3>Your Spending Summary</h3>
+                    <div class="summary">
+                        <div class="row"><span>Income</span><strong id="sum-income">$0</strong></div>
+                        <div class="row"><span>Expenses</span><strong id="sum-expenses">$0</strong></div>
+                        <div class="row"><span>Savings</span><strong id="sum-savings">$0</strong></div>
+                    </div>
+                    <div class="progress-wrap">
+                        <div class="progress-label">
+                            <span>Goal Progress</span>
+                            <span id="goal-pct">0%</span>
+                        </div>
+                        <div class="progress"><div id="goal-bar" class="progress-bar" style="width:0%"></div></div>
+                        <div class="badges" id="badges"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Enter Your Details</h3>
+                    <form id="user-form" class="form">
+                        <label>Monthly Income
+                            <input id="income" type="number" min="0" placeholder="e.g., 5000" required>
+                        </label>
+                        <label>Monthly Expenses
+                            <input id="expenses" type="number" min="0" placeholder="e.g., 3500" required>
+                        </label>
+                        <label>Savings Goal (per month)
+                            <input id="goal" type="number" min="0" placeholder="e.g., 1000" required>
+                        </label>
+                        <button type="submit" class="btn primary">Update Insights</button>
+                    </form>
+                    <div id="insights" class="insights"></div>
+                </div>
+
+                <div class="card">
+                    <h3>Quick Actions</h3>
+                    <div class="actions">
+                        <button id="ask-btn" class="btn">Ask Monexa</button>
+                        <button id="rec-btn" class="btn">Get Recommendations</button>
+                        <button id="trigger-overspend" class="btn warn">Trigger n8n: Overspend</button>
+                    </div>
+                    <div id="recs" class="recs"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Market -->
+        <section id="market" class="section">
+            <div class="section-header">
+                <h2>Market Insights</h2>
+                <p class="muted">Live prices and simple trends for stocks/ETFs/crypto.</p>
+            </div>
+
+            <div class="card">
+                <div class="toolbar">
+                    <label>Symbol(s)
+                        <input id="symbol" type="text" value="MSFT" placeholder="e.g., TCS.NS, RELIANCE.NS, BTC-USD">
+                    </label>
+                    <button id="load-quote" class="btn primary">Load Data</button>
+                    <button id="trigger-price" class="btn">Trigger n8n: Price Alert</button>
+                </div>
+                <div id="market-cards" class="grid three compact"></div>
+                <div class="chart-wrap">
+                    <canvas id="chartjs" height="240"></canvas>
+                </div>
+                <div class="muted small">Live data via backend proxy. Enter multiple symbols separated by commas.</div>
+            </div>
+        </section>
+
+        <!-- (Rest of your sections remain unchanged: planner, portfolio, alerts, advisor, automation, chat) -->
+    </main>
+
+    <script src="script.js"></script>
+</body>
+<script>
+(async ()=>{
+    const test = await fetch('http://localhost:8080/api/quote?symbol=MSFT');
+    const data = await test.json();
+    console.log('API test:', data);
+})();
+</script>
+
+<footer class="footer">
+    <span>© <span id="year"></span> Monexa. <span class="muted">Your data is stored locally; API keys remain on server.</span> <span title="Data in transit encrypted via HTTPS if hosted" class="info">🔒</span></span>
+</footer>
+</html>
