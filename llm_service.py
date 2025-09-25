@@ -83,6 +83,7 @@ def get_llm_response(user_inputs, financial_data_context, news_context):
             - If **Saving**: Suggest high-yield savings accounts, CDs, or other low-risk vehicles. Provide tips on budgeting and reaching their savings goal.
             - If **Getting a Loan**: Briefly explain key factors to consider, like credit scores, debt-to-income ratio, and comparing interest rates from different lenders. Suggest types of loans that might be appropriate (e.g., personal loan, mortgage).
         3.  **Next Steps**: Conclude with 2-3 clear, bulleted next steps the user can take.
+        4. According to the present market condition and the trends using the news context of finanacial news , suggest recommendated stocks with reasons
 
         **IMPORTANT**: Do not give definitive financial advice. Use phrases like "You might consider...", "A common strategy is...", or "It could be beneficial to look into...". Always remind the user to consult a human financial advisor.
         """
